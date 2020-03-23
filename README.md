@@ -1,5 +1,17 @@
 # babel-plugin-transform-jsx-formily-typing-path-to-name
 
+## WARNING!
+No test!
+
+
+## install
+
+```bash
+npm install babel-plugin-transform-jsx-formily-typing-path-to-name --save-dev
+// or 
+yarn add babel-plugin-transform-jsx-formily-typing-path-to-name --dev
+```
+
 
 ## config
 ```js
@@ -95,3 +107,4 @@ const Playground = () => {
   }));
 };
 ```
+
