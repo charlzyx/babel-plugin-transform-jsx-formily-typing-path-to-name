@@ -22,8 +22,10 @@ const Playground = () => {
   }), React.createElement(Field, {
     name: `[${radom}${index},end]`
   }), React.createElement(Field, {
-    name: "{wrapper:{aa:{bb:{cc:bodex.destructor1,dd:[boxed.destructor2,boxed.destructor3]},ee:ee,ff:233}}}"
+    name: "{wrapper:{aa:{bb:{cc:bodex.destructor1,dd:[boxed.destructor2,boxed.destructor3]},ee:ee}}}"
   }), React.createElement(Field, {
     name: `[${radom}${index}, data.end]`
+  }), React.createElement(Field, {
+    name: "[begin,233,othervar]"
   }));
 };
