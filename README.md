@@ -8,7 +8,7 @@ No test!
 
 ```bash
 npm install babel-plugin-transform-jsx-formily-typing-path-to-name --save-dev
-// or 
+// or
 yarn add babel-plugin-transform-jsx-formily-typing-path-to-name --dev
 ```
 
@@ -107,4 +107,3 @@ const Playground = () => {
   }));
 };
 ```
-
