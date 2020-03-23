@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-jsx-formily-typing-path-to-name",
-  "version": "0.0.1-beta2",
+  "version": "0.0.1-beta3",
   "description": "",
   "repository": "https://github.com/charlzyx/babel-plugin-transform-jsx-formily-typing-path-to-name",
   "main": "index.js",

@@ -198,7 +198,7 @@ module.exports = declare(
     };
 
     return {
-      name: 'transform-jsx-formily-types-name',
+      name: 'transform-jsx-formily-typing-path-to-name',
       visitor,
     };
   },

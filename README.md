@@ -6,7 +6,7 @@
 // .babelrc
   plugins: [
     [
-      'babel-plugin-transform-jsx-formily-typing-path-to-name',
+      'transform-jsx-formily-typing-path-to-name',
       {
         wrapper: /Form|Slot/,
         inner: /Field/,
