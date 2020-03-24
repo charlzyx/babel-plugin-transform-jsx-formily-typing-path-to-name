@@ -173,11 +173,11 @@ export const Field: FC<IMarkupSchemaFieldProps & { path?: any }> = ({
 ```
 
 ### replace
-```git
+```diff
 
---- import { SchemaForm, SchemaMarkupField as Field } from '@formily/antd';
+- import { SchemaForm, SchemaMarkupField as Field } from '@formily/antd';
 
-+++ import { Foom, Field } from 'custompath';
++ import { Foom, Field } from 'custompath';
 
 ```
 
