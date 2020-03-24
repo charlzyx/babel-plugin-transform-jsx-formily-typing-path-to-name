@@ -39,7 +39,7 @@ const parserExp = (exp, state) => {
   const isMermber = t.isMemberExpression(exp);
   // 带 optional? 的 member 表达式
   const isOptionalMermber = t.isOptionalMemberExpression(exp);
-  const isSupport = isArray || isObject || isMermber || isOptionalMermber;
+  // const isSupport = isArray || isObject || isMermber || isOptionalMermber;
   const { code } = generate(exp);
 
   switch (true) {

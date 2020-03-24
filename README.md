@@ -13,19 +13,6 @@ yarn add babel-plugin-transform-jsx-formily-typing-path-to-name --dev
 ```
 
 
-## config
-```js
-// .babelrc
-  plugins: [
-    [
-      'transform-jsx-formily-typing-path-to-name',
-      {
-        wrapper: /Form|Slot/,
-        inner: /Field/,
-      },
-    ],
-  ],
-```
 
 
 ## before
@@ -105,5 +92,114 @@ const Playground = () => {
   }), React.createElement(Field, {
     name: "[begin,233,othervar]"
   }));
+};
+```
+
+
+## work with formily
+
+
+### config
+```js
+// .babelrc
+  plugins: [
+    [
+      'transform-jsx-formily-typing-path-to-name',
+      {
+        wrapper: /Foom/,
+        inner: /Field/,
+      },
+    ],
+  ],
+```
+
+### adaptor
+```tsx
+// custompath/index.tsx
+import {
+  Checkbox,
+  DatePicker,
+  Input,
+  NumberPicker,
+  Password,
+  Radio,
+  Range,
+  Rating,
+  Select,
+  Switch,
+} from '@formily/antd-components';
+import {
+  IAntdSchemaFormProps,
+  IMarkupSchemaFieldProps,
+  SchemaForm,
+  SchemaMarkupField,
+} from '@formily/antd';
+import React, { FC } from 'react';
+
+const buildIns = {
+  Checkbox,
+  DatePicker,
+  Input,
+  NumberPicker,
+  Password,
+  Radio,
+  Range,
+  Rating,
+  Select,
+  Switch,
+};
+
+export const Foom: FC<IAntdSchemaFormProps & { typing?: any }> = ({
+  typing,
+  children,
+  components,
+  ...others
+}) => {
+  return (
+    <SchemaForm {...others} components={{ ...buildIns, ...components }}>
+      {children}
+    </SchemaForm>
+  );
+};
+
+export const Field: FC<IMarkupSchemaFieldProps & { path?: any }> = ({
+  path,
+  children,
+  ...others
+}) => {
+  return <SchemaMarkupField {...others}>{children}</SchemaMarkupField>;
+};
+
+```
+
+### replace
+```git
+
+--- import { SchemaForm, SchemaMarkupField as Field } from '@formily/antd';
+
++++ import { Foom, Field } from 'custompath';
+
+```
+
+### usage
+```tsx
+import { Foom, Field } from 'custompath';
+
+type TSearch = { username: string };
+
+const search: TSearch = {};
+
+const App = () => {
+  return (
+    <Foom typing={search}>
+      <Field
+        type="string"
+        title="商品名称"
+        // name="username"
+        path={search.username}
+        x-component="Input"
+      />
+    </Foom>
+  );
 };
 ```
