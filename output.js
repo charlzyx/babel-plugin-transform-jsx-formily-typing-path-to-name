@@ -4,7 +4,7 @@ const Playground = () => {
   return React.createElement(Form, {
     typing: data
   }, React.createElement(Field, {
-    path: "string"
+    name: "string"
   }), React.createElement(Field, {
     name: "property"
   }), React.createElement(Field, {

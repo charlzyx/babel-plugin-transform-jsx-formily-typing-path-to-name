@@ -149,36 +149,39 @@ module.exports = declare(
           return;
         }
 
-        if (t.isStringLiteral(node.value) || t.isTemplateLiteral(node.value)) return;
-
-        let path = isPathAttr ? parserExp(node.value.expression, state) : '';
-        if (!path) return;
-        // 解构
-        if (Array.isArray(path)) {
-          let ans;
-          path.forEach(pair => {
-            const [p1, p2] = pair.split(',');
-            const isArray = /^\[/.test(p1);
-            let init = ans ? ans : isArray ? [] : {};
-            ans = init;
-            _.set(init, p1, p2);
-          });
-          // 替换掉 字符串引号 "
-          path = JSON.stringify(ans).replace(/"/g, '');
-        }
-
-
-        const isTemplateInclude = path.indexOf('`') > -1;
         let exp = null;
-        if (isTemplateInclude) {
-          // 如果是存在模板字符串, 就替换掉所有的 `, 直接放在最外层
-          path = path.replace(/`/g, '');
-          path = '`' + path + '`';
-          const tplExp = parseExpression(path)
-          exp = t.JSXExpressionContainer(tplExp);
+        if (t.isStringLiteral(node.value) || t.isTemplateLiteral(node.value)) {
+          exp = node.value;
         } else {
-          exp = t.stringLiteral(path);
+          let path = isPathAttr ? parserExp(node.value.expression, state) : '';
+          if (!path) return;
+          // 解构
+          if (Array.isArray(path)) {
+            let ans;
+            path.forEach(pair => {
+              const [p1, p2] = pair.split(',');
+              const isArray = /^\[/.test(p1);
+              let init = ans ? ans : isArray ? [] : {};
+              ans = init;
+              _.set(init, p1, p2);
+            });
+            // 替换掉 字符串引号 "
+            path = JSON.stringify(ans).replace(/"/g, '');
+          }
+
+
+          const isTemplateInclude = path.indexOf('`') > -1;
+          if (isTemplateInclude) {
+            // 如果是存在模板字符串, 就替换掉所有的 `, 直接放在最外层
+            path = path.replace(/`/g, '');
+            path = '`' + path + '`';
+            const tplExp = parseExpression(path)
+            exp = t.JSXExpressionContainer(tplExp);
+          } else {
+            exp = t.stringLiteral(path);
+          }
         }
+
         if (exp) {
           const nextPathAttr = t.jsxAttribute(
             t.jsxIdentifier(NAMES.ATTR_REPLACED),
