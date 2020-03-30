@@ -149,37 +149,39 @@ module.exports = declare(
           return;
         }
 
-        let exp = null;
-        if (t.isStringLiteral(node.value) || t.isTemplateLiteral(node.value)) {
-          exp = node.value;
-        } else {
-          let path = isPathAttr ? parserExp(node.value.expression, state) : '';
-          if (!path) return;
-          // 解构
-          if (Array.isArray(path)) {
-            let ans;
-            path.forEach(pair => {
-              const [p1, p2] = pair.split(',');
-              const isArray = /^\[/.test(p1);
-              let init = ans ? ans : isArray ? [] : {};
-              ans = init;
-              _.set(init, p1, p2);
-            });
-            // 替换掉 字符串引号 "
-            path = JSON.stringify(ans).replace(/"/g, '');
-          }
+        if (!isPathAttr) return;
+        const isStr = t.isStringLiteral(node.value) || t.isTemplateLiteral(node.value);
+        let exp = isStr ? node.value: null;
+        if (!exp) {
+          let path = isPathAttr
+          ? parserExp(node.value.expression, state)
+          : '';
+         if (!path) return;
+         // 解构
+         if (Array.isArray(path)) {
+           let ans;
+           path.forEach(pair => {
+             const [p1, p2] = pair.split(',');
+             const isArray = /^\[/.test(p1);
+             let init = ans ? ans : isArray ? [] : {};
+             ans = init;
+             _.set(init, p1, p2);
+           });
+           // 替换掉 字符串引号 "
+           path = JSON.stringify(ans).replace(/"/g, '');
+         }
 
 
-          const isTemplateInclude = path.indexOf('`') > -1;
-          if (isTemplateInclude) {
-            // 如果是存在模板字符串, 就替换掉所有的 `, 直接放在最外层
-            path = path.replace(/`/g, '');
-            path = '`' + path + '`';
-            const tplExp = parseExpression(path)
-            exp = t.JSXExpressionContainer(tplExp);
-          } else {
-            exp = t.stringLiteral(path);
-          }
+         const isTemplateInclude = path.indexOf('`') > -1;
+         if (isTemplateInclude) {
+           // 如果是存在模板字符串, 就替换掉所有的 `, 直接放在最外层
+           path = path.replace(/`/g, '');
+           path = '`' + path + '`';
+           const tplExp = parseExpression(path)
+           exp = t.JSXExpressionContainer(tplExp);
+         } else {
+           exp = t.stringLiteral(path);
+         }
         }
 
         if (exp) {

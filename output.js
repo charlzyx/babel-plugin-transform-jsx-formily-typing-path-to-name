@@ -4,28 +4,27 @@ const Playground = () => {
   return React.createElement(Form, {
     typing: data
   }, React.createElement(Field, {
-    name: "string"
+    type: "string",
+    title: "\u5546\u54C1\u540D\u79F0",
+    "x-component": "Input",
+    name: "search.productName"
   }), React.createElement(Field, {
-    name: "property"
+    type: "string",
+    title: "\u5546\u54C1\u4EE3\u7801",
+    "x-component": "Input",
+    name: "search.productNo"
   }), React.createElement(Field, {
-    name: `template[${index}]property`
+    type: "string",
+    enum: cdict.optionsWithAll,
+    title: "\u5546\u54C1\u5206\u7C7B",
+    "x-component": "Select",
+    name: "search.categoryId"
   }), React.createElement(Field, {
-    name: "[start,end]"
-  }), React.createElement(Field, {
-    name: "{province:p,city:c,dist:p}"
-  }), React.createElement(Field, {
-    name: `{complex:[${index}].attr,string:any}`
-  }), React.createElement(Field, {
-    name: `[[${index}].attr,other]`
-  }), React.createElement(Field, {
-    name: `[${radom}${index}, end]`
-  }), React.createElement(Field, {
-    name: `[${radom}${index},end]`
-  }), React.createElement(Field, {
-    name: "{wrapper:{aa:{bb:{cc:bodex.destructor1,dd:[boxed.destructor2,boxed.destructor3]},ee:ee}}}"
-  }), React.createElement(Field, {
-    name: `[${radom}${index}, data.end]`
-  }), React.createElement(Field, {
-    name: "[begin,233,othervar]"
+    type: "number",
+    enum: dict.status.options,
+    title: "\u662F\u5426\u4E0A\u67B6",
+    default: dict.status.emap['全部'],
+    "x-component": "Radio",
+    name: "status"
   }));
 };
